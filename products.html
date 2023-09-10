@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        
+        .product-block {
+            margin-bottom: 20px; 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+        }
+    </style>
+    <title>Products - SuperCommerce</title>
+</head>
+<body>
+    <header class="top-bar">
+        <div class="brand">
+            <h1>SuperCommerce</h1>
+        </div>
+        <div class="buttons">
+            <button class="btn"><a href='index.html' class="link">Home</a></button>
+            <button class="btn"><a href='products.html' class="link">Products</a></button>
+            <button class="btn">Cart</button>
+            <button class='btn'><a href = 'admin_login.php' class="link">Admin</a></button>
+        </div>
+    </header>
+
+    <main>
+        <section class="featured-products">
+            <h2>Featured Products</h2>
+            <div class="product-slider" id="product-list">
+                
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 SuperCommerce</p>
+    </footer>
+    
+    <script src="script.js"></script>
+    <script>
+        
+        fetch('fetch_products.php')
+            .then(response => response.json())
+            .then(products => {
+                const productContainer = document.getElementById('product-list');
+
+                products.forEach(product => {
+                    const productBlock = document.createElement('div');
+                    productBlock.className = 'product-block';
+
+                    const productName = document.createElement('h3');
+                    productName.textContent = product.product_name;
+
+                    const productDescription = document.createElement('p');
+                    productDescription.textContent = product.product_description;
+
+                    productBlock.appendChild(productName);
+                    productBlock.appendChild(productDescription);
+
+                    productContainer.appendChild(productBlock);
+                });
+            })
+            .catch(error => console.error('Error fetching products:', error));
+    </script>
+</body>
+</html>
